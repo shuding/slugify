@@ -36,8 +36,12 @@ module.exports = (string, options) => {
 
 	const shouldPrependUnderscore = options.preserveLeadingUnderscore && string.startsWith('_');
 
+	const customReplacementsArray = options.customReplacements instanceof Map
+		? Array.from(options.customReplacements.entries())
+		: options.customReplacements;
+	
 	const customReplacements = new Map(
-		[].concat(builtinOverridableReplacements).concat(options.customReplacements).filter(Boolean),
+		[].concat(builtinOverridableReplacements).concat(customReplacementsArray).filter(Boolean),
 	);
 
 	string = transliterate(string, {customReplacements});
