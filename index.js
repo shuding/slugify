@@ -1,9 +1,9 @@
 'use strict';
-const escapeStringRegexp = require('escape-string-regexp');
-const transliterate = require('@sindresorhus/transliterate');
-const builtinOverridableReplacements = require('./overridable-replacements');
+var escapeStringRegexp = require('escape-string-regexp');
+var transliterate = require('@sindresorhus/transliterate');
+var builtinOverridableReplacements = require('./overridable-replacements');
 
-const decamelize = string => {
+function decamelize(string) {
 	return string
 		// Separate capitalized words.
 		.replace(/([A-Z]{2,})([a-z\d]+)/g, '$1 $2')
@@ -13,15 +13,15 @@ const decamelize = string => {
 		.replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1 $2');
 };
 
-const removeMootSeparators = (string, separator) => {
-	const escapedSeparator = escapeStringRegexp(separator);
+function removeMootSeparators(string, separator) {
+	var escapedSeparator = escapeStringRegexp(separator);
 
 	return string
 		.replace(new RegExp(`${escapedSeparator}{2,}`, 'g'), separator)
 		.replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), '');
 };
 
-module.exports = (string, options) => {
+module.exports = function (string, options) {
 	if (typeof string !== 'string') {
 		throw new TypeError(`Expected a string, got \`${typeof string}\``);
 	}
@@ -34,13 +34,13 @@ module.exports = (string, options) => {
 		preserveLeadingUnderscore: false,
 	}, options);
 
-	const shouldPrependUnderscore = options.preserveLeadingUnderscore && string.startsWith('_');
+	var shouldPrependUnderscore = options.preserveLeadingUnderscore && string.startsWith('_');
 
-	const customReplacementsArray = options.customReplacements instanceof Map
+	var customReplacementsArray = options.customReplacements instanceof Map
 		? Array.from(options.customReplacements.entries())
 		: options.customReplacements;
 	
-	const customReplacements = new Map(
+	var customReplacements = new Map(
 		[].concat(builtinOverridableReplacements).concat(customReplacementsArray).filter(Boolean),
 	);
 
@@ -50,7 +50,7 @@ module.exports = (string, options) => {
 		string = decamelize(string);
 	}
 
-	let patternSlug = /[^a-zA-Z\d]+/g;
+	var patternSlug = /[^a-zA-Z\d]+/g;
 
 	if (options.lowercase) {
 		string = string.toLowerCase();
