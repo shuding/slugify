@@ -41,7 +41,7 @@
 		"id"
 	],
 	"dependencies": {
-		"@sindresorhus/transliterate": "^0.1.0",
+		"@sindresorhus/transliterate": "git+https://github.com/eseQ/transliterate.git",
 		"escape-string-regexp": "^2.0.0"
 	},
 	"devDependencies": {
