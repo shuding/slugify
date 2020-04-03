@@ -2,6 +2,8 @@
 
 > Slugify a string
 
+This repo IS FORK of `sindresorhus/slugify` with IE and EDGE support
+
 Useful for URLs, filenames, and IDs.
 
 It handles most major languages, including [German (umlauts)](https://en.wikipedia.org/wiki/Germanic_umlaut), Vietnamese, Arabic, Russian, [and more](https://github.com/sindresorhus/transliterate#supported-languages).
