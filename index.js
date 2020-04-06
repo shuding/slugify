@@ -3,6 +3,21 @@ var escapeStringRegexp = require('escape-string-regexp');
 var transliterate = require('@sindresorhus/transliterate');
 var builtinOverridableReplacements = require('./overridable-replacements');
 
+if (!Object.keys) Object.keys = function(o) {
+  if (o !== Object(o))
+    throw new TypeError('Object.keys called on a non-object');
+  var k=[],p;
+  for (p in o) if (Object.prototype.hasOwnProperty.call(o,p)) k.push(p);
+  return k;
+}
+
+function objAssign(objs) {
+	return objs.reduce(function (r, o) {
+        	Object.keys(o).forEach(function (k) { r[k] = o[k]; });
+        	return r;
+    	}, {});
+};
+
 function decamelize(string) {
 	return string
 		// Separate capitalized words.
@@ -28,13 +43,13 @@ module.exports = function (initString, options) {
 	
 	var str = initString;
 
-	options = Object.assign({
+	options = objAssign([{
 		separator: '-',
 		lowercase: true,
 		decamelize: true,
 		customReplacements: [],
 		preserveLeadingUnderscore: false,
-	}, options);
+	}, options]);
 
 	var shouldPrependUnderscore = options.preserveLeadingUnderscore && str.startsWith('_');
 	
