@@ -21,10 +21,12 @@ function removeMootSeparators(string, separator) {
 		.replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), '');
 };
 
-module.exports = function (string, options) {
-	if (typeof string !== 'string') {
-		throw new TypeError(`Expected a string, got \`${typeof string}\``);
+module.exports = function (initString, options) {
+	if (typeof initString !== 'string') {
+		throw new TypeError(`Expected a string, got \`${typeof initString}\``);
 	}
+	
+	var str = initString;
 
 	options = Object.assign({
 		separator: '-',
@@ -34,36 +36,30 @@ module.exports = function (string, options) {
 		preserveLeadingUnderscore: false,
 	}, options);
 
-	var shouldPrependUnderscore = options.preserveLeadingUnderscore && string.startsWith('_');
-
-	var customReplacementsArray = options.customReplacements instanceof Map
-		? Array.from(options.customReplacements.entries())
-		: options.customReplacements;
+	var shouldPrependUnderscore = options.preserveLeadingUnderscore && str.startsWith('_');
 	
-	var customReplacements = new Map(
-		[].concat(builtinOverridableReplacements).concat(customReplacementsArray).filter(Boolean),
-	);
+	var customReplacements = [].concat(builtinOverridableReplacements).concat(options.customReplacements).filter(Boolean);
 
-	string = transliterate(string, {customReplacements});
+	str = transliterate(str, {customReplacements});
 
 	if (options.decamelize) {
-		string = decamelize(string);
+		str = decamelize(str);
 	}
 
 	var patternSlug = /[^a-zA-Z\d]+/g;
 
 	if (options.lowercase) {
-		string = string.toLowerCase();
+		str = str.toLowerCase();
 		patternSlug = /[^a-z\d]+/g;
 	}
 
-	string = string.replace(patternSlug, options.separator);
-	string = string.replace(/\\/g, '');
-	string = removeMootSeparators(string, options.separator);
+	str = str.replace(patternSlug, options.separator);
+	str = str.replace(/\\/g, '');
+	str = removeMootSeparators(str, options.separator);
 
 	if (shouldPrependUnderscore) {
-		string = `_${string}`;
+		str = `_${str}`;
 	}
 
-	return string;
+	return str;
 };
