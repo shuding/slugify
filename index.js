@@ -13,8 +13,11 @@ if (!Object.keys) Object.keys = function(o) {
 
 function objAssign(objs) {
 	return objs.reduce(function (r, o) {
-        	Object.keys(o).forEach(function (k) { r[k] = o[k]; });
-        	return r;
+		try {
+			var d = r;
+			Object.keys(o).forEach(function (k) { d[k] = o[k]; });
+			return d;
+		} catch { return r; }
     	}, {});
 };
 
@@ -36,12 +39,13 @@ function removeMootSeparators(string, separator) {
 		.replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), '');
 };
 
-module.exports = function (initString, options) {
+module.exports = function (initString, initOptions) {
 	if (typeof initString !== 'string') {
 		throw new TypeError(`Expected a string, got \`${typeof initString}\``);
 	}
 	
 	var str = initString;
+	var options = initOptions || {};
 
 	options = objAssign([{
 		separator: '-',
