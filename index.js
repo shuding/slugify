@@ -1,7 +1,6 @@
 'use strict';
 var escapeStringRegexp = require('escape-string-regexp');
 var transliterate = require('@sindresorhus/transliterate');
-var builtinOverridableReplacements = require('./overridable-replacements');
 
 if (!Object.keys) Object.keys = function(o) {
   if (o !== Object(o))
@@ -10,16 +9,6 @@ if (!Object.keys) Object.keys = function(o) {
   for (p in o) if (Object.prototype.hasOwnProperty.call(o,p)) k.push(p);
   return k;
 }
-
-function objAssign(objs) {
-	return objs.reduce(function (r, o) {
-		try {
-			var d = r;
-			Object.keys(o).forEach(function (k) { d[k] = o[k]; });
-			return d;
-		} catch { return r; }
-    	}, {});
-};
 
 function decamelize(string) {
 	return string
@@ -39,46 +28,20 @@ function removeMootSeparators(string, separator) {
 		.replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), '');
 };
 
-module.exports = function (initString, initOptions) {
+module.exports = function (initString) {
 	if (typeof initString !== 'string') {
 		throw new TypeError(`Expected a string, got \`${typeof initString}\``);
 	}
-	
+
 	var str = initString;
-	var options = initOptions || {};
+	str = transliterate(str, {customReplacements: [['&', ' and ']]});
+	str = decamelize(str);
+	str = str.toLowerCase();
 
-	options = objAssign([{
-		separator: '-',
-		lowercase: true,
-		decamelize: true,
-		customReplacements: [],
-		preserveLeadingUnderscore: false,
-	}, options]);
-
-	var shouldPrependUnderscore = options.preserveLeadingUnderscore && str.startsWith('_');
-	
-	var customReplacements = [].concat(builtinOverridableReplacements).concat(options.customReplacements).filter(Boolean);
-
-	str = transliterate(str, {customReplacements});
-
-	if (options.decamelize) {
-		str = decamelize(str);
-	}
-
-	var patternSlug = /[^a-zA-Z\d]+/g;
-
-	if (options.lowercase) {
-		str = str.toLowerCase();
-		patternSlug = /[^a-z\d]+/g;
-	}
-
-	str = str.replace(patternSlug, options.separator);
+	var patternSlug = /[^a-z\d]+/g;
+	str = str.replace(patternSlug, '-');
 	str = str.replace(/\\/g, '');
-	str = removeMootSeparators(str, options.separator);
-
-	if (shouldPrependUnderscore) {
-		str = `_${str}`;
-	}
+	str = removeMootSeparators(str, '-');
 
 	return str;
 };

@@ -1,10 +1,9 @@
 {
-	"name": "@sindresorhus/slugify",
-	"version": "0.14.2",
+	"name": "sluga",
+	"version": "0.1.0",
 	"description": "Slugify a string",
 	"license": "MIT",
-	"repository": "sindresorhus/slugify",
-	"funding": "https://github.com/sponsors/sindresorhus",
+	"repository": "shuding/sluga",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
@@ -13,13 +12,9 @@
 	"engines": {
 		"node": ">=10"
 	},
-	"scripts": {
-		"test": "xo && ava && tsd"
-	},
 	"files": [
 		"index.js",
-		"index.d.ts",
-		"overridable-replacements.js"
+		"index.d.ts"
 	],
 	"keywords": [
 		"string",
