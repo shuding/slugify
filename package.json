@@ -1,6 +1,6 @@
 {
 	"name": "sluga",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Slugify a string",
 	"license": "MIT",
 	"repository": "shuding/sluga",
@@ -36,7 +36,7 @@
 		"id"
 	],
 	"dependencies": {
-		"@sindresorhus/transliterate": "git+https://github.com/eseQ/transliterate.git",
+		"@sindresorhus/transliterate": "eseQ/transliterate#7bcaa72d52df30d73d582cb7b4248c40d24f2fa7",
 		"escape-string-regexp": "^2.0.0"
 	},
 	"devDependencies": {
