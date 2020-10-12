@@ -1,6 +1,6 @@
 'use strict';
 var escapeStringRegexp = require('escape-string-regexp');
-var transliterate = require('@sindresorhus/transliterate');
+var transliterate = require('./transliterate');
 
 if (!Object.keys) Object.keys = function(o) {
   if (o !== Object(o))

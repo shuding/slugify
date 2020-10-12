@@ -1,6 +1,6 @@
 {
 	"name": "sluga",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Slugify a string",
 	"license": "MIT",
 	"repository": "shuding/sluga",
@@ -14,7 +14,9 @@
 	},
 	"files": [
 		"index.js",
-		"index.d.ts"
+		"index.d.ts",
+		"transliterate.js",
+		"replacement.js"
 	],
 	"keywords": [
 		"string",
@@ -36,8 +38,8 @@
 		"id"
 	],
 	"dependencies": {
-		"@sindresorhus/transliterate": "eseQ/transliterate#7bcaa72d52df30d73d582cb7b4248c40d24f2fa7",
-		"escape-string-regexp": "^2.0.0"
+		"escape-string-regexp": "^2.0.0",
+		"lodash.deburr": "^4.1.0"
 	},
 	"devDependencies": {
 		"ava": "^2.4.0",
