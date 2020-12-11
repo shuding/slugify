@@ -17,7 +17,7 @@ function objAssign(objs) {
 			var d = r;
 			Object.keys(o).forEach(function (k) { d[k] = o[k]; });
 			return d;
-		} catch { return r; }
+		} catch (_) { return r; }
     	}, {});
 };
 
