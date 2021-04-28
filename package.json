@@ -1,6 +1,6 @@
 {
   "name": "sluga",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Slugify a string",
   "license": "MIT",
   "repository": "shuding/sluga",
@@ -15,8 +15,8 @@
   "files": [
     "dist"
   ],
-	"source": "./index.js",
-	"main": "dist/index.js",
+  "source": "./index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "microbundle *.js --compress --no-sourcemap"
   },
